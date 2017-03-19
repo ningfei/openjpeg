@@ -179,8 +179,12 @@ configure_file(
   )
 
 #-----------------------------------------------------------------------------
+# Choose build type
+set(CMAKE_BUILD_TYPE "Release" CACHE STRING
+    "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
+
 # OpenJPEG build configuration options.
-option(BUILD_SHARED_LIBS "Build OpenJPEG shared library and link executables against it." ON)
+option(BUILD_SHARED_LIBS "Build OpenJPEG shared library and link executables against it." OFF)
 set (EXECUTABLE_OUTPUT_PATH ${OPENJPEG_BINARY_DIR}/bin CACHE PATH "Single output directory for building all executables.")
 set (LIBRARY_OUTPUT_PATH ${OPENJPEG_BINARY_DIR}/bin CACHE PATH "Single output directory for building all libraries.")
 mark_as_advanced(LIBRARY_OUTPUT_PATH EXECUTABLE_OUTPUT_PATH)
@@ -263,7 +267,7 @@ option(BUILD_LUTS_GENERATOR "Build utility to generate t1_luts.h" OFF)
 
 #-----------------------------------------------------------------------------
 # Build Applications
-option(BUILD_CODEC "Build the CODEC executables" ON)
+option(BUILD_CODEC "Build the CODEC executables" OFF)
 option(BUILD_MJ2 "Build the MJ2 executables." OFF)
 option(BUILD_JPWL "Build the JPWL library and executables" OFF)
 option(BUILD_JPIP "Build the JPIP library and executables." OFF)
