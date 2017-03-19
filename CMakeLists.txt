@@ -26,6 +26,15 @@ set(OPENJPEG_LIBRARY_NAME openjp2)
 
 project(${OPENJPEG_NAMESPACE} C)
 
+# Option Choose whether to use static runtime
+include(ucm.cmake)
+option(USE_STATIC_RUNTIME "Use static runtime" ON)
+if(USE_STATIC_RUNTIME)
+    ucm_set_runtime(STATIC)
+else()
+    ucm_set_runtime(DYNAMIC)
+endif()
+
 # Do full dependency headers.
 include_regular_expression("^.*$")
 
