@@ -97,7 +97,11 @@ Most compilers implement their own version of this keyword ...
     #define OPJ_CALLCONV __stdcall
 #else
     #if __GNUC__ >= 4
-        #define OPJ_API    __attribute__ ((visibility ("default")))
+        #if defined(OPJ_STATIC) /* static library uses "hidden" */
+            #define OPJ_API    __attribute__ ((visibility ("hidden")))
+        #else
+            #define OPJ_API    __attribute__ ((visibility ("default")))
+        #endif
         #define OPJ_LOCAL  __attribute__ ((visibility ("hidden")))
     #else
         #define OPJ_API
