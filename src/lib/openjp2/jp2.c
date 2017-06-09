@@ -1,6 +1,6 @@
 /*
- * The copyright in this software is being made available under the 2-clauses 
- * BSD License, included below. This software may be subject to other third 
+ * The copyright in this software is being made available under the 2-clauses
+ * BSD License, included below. This software may be subject to other third
  * party and contributor rights, including patent rights, and no such rights
  * are granted under this license.
  *
@@ -8,11 +8,11 @@
  * Copyright (c) 2002-2014, Professor Benoit Macq
  * Copyright (c) 2001-2003, David Janssens
  * Copyright (c) 2002-2003, Yannick Verschueren
- * Copyright (c) 2003-2007, Francois-Olivier Devaux 
+ * Copyright (c) 2003-2007, Francois-Olivier Devaux
  * Copyright (c) 2003-2014, Antonin Descampe
  * Copyright (c) 2005, Herve Drolon, FreeImage Team
  * Copyright (c) 2010-2011, Kaori Hagihara
- * Copyright (c) 2008, 2011-2012, Centre National d'Etudes Spatiales (CNES), FR 
+ * Copyright (c) 2008, 2011-2012, Centre National d'Etudes Spatiales (CNES), FR
  * Copyright (c) 2012, CS Systemes d'Information, France
  * All rights reserved.
  *
@@ -456,7 +456,7 @@ static void opj_jp2_setup_header_reading (opj_jp2_t *jp2);
 	/* process read data */
 	opj_read_bytes(l_data_header,&(box->length), 4);
 	opj_read_bytes(l_data_header+4,&(box->type), 4);
-    
+
   if(box->length == 0)/* last box */
     {
     const OPJ_OFF_T bleft = opj_stream_get_number_byte_left(cio);
@@ -568,7 +568,7 @@ OPJ_BYTE * opj_jp2_write_ihdr(opj_jp2_t *jp2,
                               )
 {
 	OPJ_BYTE * l_ihdr_data,* l_current_ihdr_ptr;
-	
+
 	/* preconditions */
 	assert(jp2 != 00);
 	assert(p_nb_bytes_written != 00);
@@ -581,36 +581,36 @@ OPJ_BYTE * opj_jp2_write_ihdr(opj_jp2_t *jp2,
 	memset(l_ihdr_data,0,22);
 
 	l_current_ihdr_ptr = l_ihdr_data;
-	
+
 	opj_write_bytes(l_current_ihdr_ptr,22,4);				/* write box size */
 	l_current_ihdr_ptr+=4;
 
 	opj_write_bytes(l_current_ihdr_ptr,JP2_IHDR, 4);		/* IHDR */
 	l_current_ihdr_ptr+=4;
-	
+
 	opj_write_bytes(l_current_ihdr_ptr,jp2->h, 4);		/* HEIGHT */
 	l_current_ihdr_ptr+=4;
-	
+
 	opj_write_bytes(l_current_ihdr_ptr, jp2->w, 4);		/* WIDTH */
 	l_current_ihdr_ptr+=4;
-	
+
 	opj_write_bytes(l_current_ihdr_ptr, jp2->numcomps, 2);		/* NC */
 	l_current_ihdr_ptr+=2;
-	
+
 	opj_write_bytes(l_current_ihdr_ptr, jp2->bpc, 1);		/* BPC */
 	++l_current_ihdr_ptr;
-	
+
 	opj_write_bytes(l_current_ihdr_ptr, jp2->C, 1);		/* C : Always 7 */
 	++l_current_ihdr_ptr;
-	
+
 	opj_write_bytes(l_current_ihdr_ptr, jp2->UnkC, 1);		/* UnkC, colorspace unknown */
 	++l_current_ihdr_ptr;
-	
+
 	opj_write_bytes(l_current_ihdr_ptr, jp2->IPR, 1);		/* IPR, no intellectual property */
 	++l_current_ihdr_ptr;
-	
+
 	*p_nb_bytes_written = 22;
-	
+
 	return l_ihdr_data;
 }
 
@@ -622,7 +622,7 @@ OPJ_BYTE * opj_jp2_write_bpcc(	opj_jp2_t *jp2,
 	/* room for 8 bytes for box and 1 byte for each component */
 	OPJ_UINT32 l_bpcc_size = 8 + jp2->numcomps;
 	OPJ_BYTE * l_bpcc_data,* l_current_bpcc_ptr;
-	
+
 	/* preconditions */
 	assert(jp2 != 00);
 	assert(p_nb_bytes_written != 00);
@@ -637,7 +637,7 @@ OPJ_BYTE * opj_jp2_write_bpcc(	opj_jp2_t *jp2,
 
 	opj_write_bytes(l_current_bpcc_ptr,l_bpcc_size,4);				/* write box size */
 	l_current_bpcc_ptr += 4;
-	
+
 	opj_write_bytes(l_current_bpcc_ptr,JP2_BPCC,4);					/* BPCC */
 	l_current_bpcc_ptr += 4;
 
@@ -647,7 +647,7 @@ OPJ_BYTE * opj_jp2_write_bpcc(	opj_jp2_t *jp2,
 	}
 
 	*p_nb_bytes_written = l_bpcc_size;
-	
+
 	return l_bpcc_data;
 }
 
@@ -664,7 +664,7 @@ OPJ_BOOL opj_jp2_read_bpcc( opj_jp2_t *jp2,
 	assert(jp2 != 00);
 	assert(p_manager != 00);
 
-	
+
 	if (jp2->bpc != 255 ){
 		opj_event_msg(p_manager, EVT_WARNING, "A BPCC header box is available although BPC given by the IHDR box (%d) indicate components bit depth is constant\n",jp2->bpc);
 	}
@@ -691,13 +691,13 @@ OPJ_BYTE * opj_jp2_write_colr(  opj_jp2_t *jp2,
 	/* room for 8 bytes for box 3 for common data and variable upon profile*/
 	OPJ_UINT32 l_colr_size = 11;
 	OPJ_BYTE * l_colr_data,* l_current_colr_ptr;
-	
+
 	/* preconditions */
 	assert(jp2 != 00);
 	assert(p_nb_bytes_written != 00);
     assert(jp2->meth == 1 || jp2->meth == 2);
 
-	switch (jp2->meth) { 
+	switch (jp2->meth) {
 		case 1 :
 			l_colr_size += 4; /* EnumCS */
 			break;
@@ -714,24 +714,24 @@ OPJ_BYTE * opj_jp2_write_colr(  opj_jp2_t *jp2,
 		return 00;
 	}
 	memset(l_colr_data,0,l_colr_size);
-	
+
 	l_current_colr_ptr = l_colr_data;
 
 	opj_write_bytes(l_current_colr_ptr,l_colr_size,4);				/* write box size */
 	l_current_colr_ptr += 4;
-	
+
 	opj_write_bytes(l_current_colr_ptr,JP2_COLR,4);					/* BPCC */
 	l_current_colr_ptr += 4;
-	
+
 	opj_write_bytes(l_current_colr_ptr, jp2->meth,1);				/* METH */
 	++l_current_colr_ptr;
-	
+
 	opj_write_bytes(l_current_colr_ptr, jp2->precedence,1);			/* PRECEDENCE */
 	++l_current_colr_ptr;
-	
+
 	opj_write_bytes(l_current_colr_ptr, jp2->approx,1);				/* APPROX */
 	++l_current_colr_ptr;
-	
+
 	if (jp2->meth == 1) { /* Meth value is restricted to 1 or 2 (Table I.9 of part 1) */
         opj_write_bytes(l_current_colr_ptr, jp2->enumcs,4); }       /* EnumCS */
     else {
@@ -745,7 +745,7 @@ OPJ_BYTE * opj_jp2_write_colr(  opj_jp2_t *jp2,
 	}
 
 	*p_nb_bytes_written = l_colr_size;
-	
+
 	return l_colr_data;
 }
 
@@ -1102,7 +1102,7 @@ void opj_jp2_apply_cdef(opj_image_t *image, opj_jp2_color_t *color)
       continue;
       }
 
-    cn = info[i].cn; 
+    cn = info[i].cn;
     acn = (OPJ_UINT16)(asoc - 1);
     if( cn >= image->numcomps || acn >= image->numcomps )
       {
@@ -1246,7 +1246,7 @@ OPJ_BOOL opj_jp2_read_colr( opj_jp2_t *jp2,
 		}
 
 		opj_read_bytes(p_colr_header_data,&jp2->enumcs ,4);			/* EnumCS */
-        
+
         jp2->color.jp2_has_colr = 1;
 	}
 	else if (jp2->meth == 2) {
@@ -1269,14 +1269,14 @@ OPJ_BOOL opj_jp2_read_colr( opj_jp2_t *jp2,
 			++p_colr_header_data;
 			jp2->color.icc_profile_buf[it_icc_value] = (OPJ_BYTE) l_value;
 		}
-	    
+
         jp2->color.jp2_has_colr = 1;
 	}
 	else if (jp2->meth > 2)
     {
-        /*	ISO/IEC 15444-1:2004 (E), Table I.9 ­ Legal METH values:
+        /*	ISO/IEC 15444-1:2004 (E), Table I.9 Â­ Legal METH values:
         conforming JP2 reader shall ignore the entire Colour Specification box.*/
-        opj_event_msg(p_manager, EVT_INFO, "COLR BOX meth value is not a regular value (%d), " 
+        opj_event_msg(p_manager, EVT_INFO, "COLR BOX meth value is not a regular value (%d), "
             "so we will ignore the entire Colour Specification box. \n", jp2->meth);
     }
     return OPJ_TRUE;
@@ -1351,7 +1351,7 @@ OPJ_BOOL opj_jp2_write_jp2h(opj_jp2_t *jp2,
 
 	/* to store the data of the super box */
 	OPJ_BYTE l_jp2h_data [8];
-	
+
 	/* preconditions */
 	assert(stream != 00);
 	assert(jp2 != 00);
@@ -1370,7 +1370,7 @@ OPJ_BOOL opj_jp2_write_jp2h(opj_jp2_t *jp2,
 		l_writers[0].handler = opj_jp2_write_ihdr;
 		l_writers[1].handler = opj_jp2_write_colr;
 	}
-	
+
 	/* write box header */
 	/* write JP2H type */
 	opj_write_bytes(l_jp2h_data+4,JP2_JP2H,4);
@@ -1402,13 +1402,13 @@ OPJ_BOOL opj_jp2_write_jp2h(opj_jp2_t *jp2,
 
 	/* write super box size */
 	opj_write_bytes(l_jp2h_data,l_jp2h_size,4);
-	
+
 	/* write super box data on stream */
 	if (opj_stream_write_data(stream,l_jp2h_data,8,p_manager) != 8) {
 		opj_event_msg(p_manager, EVT_ERROR, "Stream error while writing JP2 Header box\n");
 		l_result = OPJ_FALSE;
 	}
-	
+
 	if (l_result) {
 		l_current_writer = l_writers;
 		for (i=0;i<l_nb_pass;++i) {
@@ -1422,7 +1422,7 @@ OPJ_BOOL opj_jp2_write_jp2h(opj_jp2_t *jp2,
 	}
 
 	l_current_writer = l_writers;
-	
+
 	/* cleanup */
 	for (i=0;i<l_nb_pass;++i) {
 		if (l_current_writer->m_data != 00) {
@@ -1449,7 +1449,7 @@ OPJ_BOOL opj_jp2_write_ftyp(opj_jp2_t *jp2,
 	assert(p_manager != 00);
 
 	l_ftyp_data = (OPJ_BYTE *) opj_malloc(l_ftyp_size);
-	
+
 	if (l_ftyp_data == 00) {
 		opj_event_msg(p_manager, EVT_ERROR, "Not enough memory to handle ftyp data\n");
 		return OPJ_FALSE;
@@ -1474,7 +1474,7 @@ OPJ_BOOL opj_jp2_write_ftyp(opj_jp2_t *jp2,
 	for (i = 0; i < jp2->numcl; i++)  {
 		opj_write_bytes(l_current_data_ptr, jp2->cl[i],4);	/* CL */
 	}
-	
+
 	l_result = (opj_stream_write_data(cio,l_ftyp_data,l_ftyp_size,p_manager) == l_ftyp_size);
 	if (! l_result)
 	{
@@ -1482,7 +1482,7 @@ OPJ_BOOL opj_jp2_write_ftyp(opj_jp2_t *jp2,
 	}
 
 	opj_free(l_ftyp_data);
-	
+
 	return l_result;
 }
 
@@ -1492,13 +1492,13 @@ OPJ_BOOL opj_jp2_write_jp2c(opj_jp2_t *jp2,
 {
 	OPJ_OFF_T j2k_codestream_exit;
 	OPJ_BYTE l_data_header [8];
-	
+
 	/* preconditions */
 	assert(jp2 != 00);
 	assert(cio != 00);
 	assert(p_manager != 00);
 	assert(opj_stream_has_seek(cio));
-	
+
 	j2k_codestream_exit = opj_stream_tell(cio);
 	opj_write_bytes(l_data_header,
                     (OPJ_UINT32) (j2k_codestream_exit - jp2->j2k_codestream_offset),
@@ -1509,7 +1509,7 @@ OPJ_BOOL opj_jp2_write_jp2c(opj_jp2_t *jp2,
 		opj_event_msg(p_manager, EVT_ERROR, "Failed to seek in the stream.\n");
 		return OPJ_FALSE;
 	}
-	
+
 	if (opj_stream_write_data(cio,l_data_header,8,p_manager) != 8) {
 		opj_event_msg(p_manager, EVT_ERROR, "Failed to seek in the stream.\n");
 		return OPJ_FALSE;
@@ -1541,7 +1541,7 @@ OPJ_BOOL opj_jp2_write_jp(	opj_jp2_t *jp2,
 	opj_write_bytes(l_signature_data+4,JP2_JP,4);
 	/* writes magic number*/
 	opj_write_bytes(l_signature_data+8,0x0d0a870a,4);
-	
+
 	if (opj_stream_write_data(cio,l_signature_data,12,p_manager) != 12) {
 		return OPJ_FALSE;
 	}
@@ -1592,7 +1592,7 @@ void opj_jp2_setup_encoder(	opj_jp2_t *jp2,
 
 	/* setup the JP2 codec */
 	/* ------------------- */
-	
+
 	/* Profile box */
 
 	jp2->brand = JP2_JP2;	/* BR */
@@ -1631,7 +1631,7 @@ void opj_jp2_setup_encoder(	opj_jp2_t *jp2,
 	jp2->C = 7;			/* C : Always 7 */
 	jp2->UnkC = 0;		/* UnkC, colorspace specified in colr box */
 	jp2->IPR = 0;		/* IPR, no intellectual property */
-	
+
 	/* BitsPerComponent box */
 	for (i = 0; i < image->numcomps; i++) {
 		jp2->comps[i].bpcc = image->comps[i].prec - 1 + (image->comps[i].sgnd << 7);
@@ -1641,7 +1641,7 @@ void opj_jp2_setup_encoder(	opj_jp2_t *jp2,
     if(image->icc_profile_len) {
         jp2->meth = 2;
         jp2->enumcs = 0;
-    } 
+    }
     else {
         jp2->meth = 1;
         if (image->color_space == 1)
@@ -1859,7 +1859,7 @@ OPJ_BOOL opj_jp2_read_header_procedure(  opj_jp2_t *jp2,
 			l_nb_bytes_read = (OPJ_UINT32)opj_stream_read_data(stream,l_current_data,l_current_data_size,p_manager);
 			if (l_nb_bytes_read != l_current_data_size) {
 				opj_event_msg(p_manager, EVT_ERROR, "Problem with reading JPEG2000 box, stream error\n");
-                opj_free(l_current_data);                
+                opj_free(l_current_data);
 				return OPJ_FALSE;
 			}
 
