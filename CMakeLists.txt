@@ -19,6 +19,19 @@ set(OPENJPEG_LIBRARY_NAME openjp2)
 
 project(${OPENJPEG_NAMESPACE} C)
 
+# Option Choose whether to use static runtime
+include(ucm.cmake)
+option(USE_STATIC_RUNTIME "Use static runtime" ON)
+if(USE_STATIC_RUNTIME)
+    ucm_set_runtime(STATIC)
+else()
+    ucm_set_runtime(DYNAMIC)
+endif()
+
+# Choose build type
+set(CMAKE_BUILD_TYPE "Release" CACHE STRING
+    "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
+
 # Do full dependency headers.
 include_regular_expression("^.*$")
 
@@ -142,7 +155,7 @@ configure_file(
 
 #-----------------------------------------------------------------------------
 # OpenJPEG build configuration options.
-option(BUILD_SHARED_LIBS "Build OpenJPEG shared library and link executables against it." ON)
+option(BUILD_SHARED_LIBS "Build OpenJPEG shared library and link executables against it." OFF)
 option(BUILD_STATIC_LIBS "Build OpenJPEG static library." ON)
 set (EXECUTABLE_OUTPUT_PATH ${OPENJPEG_BINARY_DIR}/bin CACHE PATH "Single output directory for building all executables.")
 set (LIBRARY_OUTPUT_PATH ${OPENJPEG_BINARY_DIR}/bin CACHE PATH "Single output directory for building all libraries.")
@@ -228,7 +241,7 @@ endif()
 
 #-----------------------------------------------------------------------------
 # Build Applications
-option(BUILD_CODEC "Build the CODEC executables" ON)
+option(BUILD_CODEC "Build the CODEC executables" OFF)
 option(BUILD_JPIP "Build the JPIP library and executables." OFF)
 if(BUILD_JPIP)
   option(BUILD_JPIP_SERVER "Build the JPIP server." OFF)
