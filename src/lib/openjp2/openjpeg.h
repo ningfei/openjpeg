@@ -82,6 +82,10 @@ Most compilers implement their own version of this keyword ...
 #define OPJ_DEPRECATED_STRUCT_MEMBER(memb, msg) memb
 #endif
 
+#if defined(_WIN32)
+    #define NONDLL 1
+#endif /* WIN32, use static library*/
+
 #if defined(OPJ_STATIC) || !defined(_WIN32)
 /* http://gcc.gnu.org/wiki/Visibility */
 #   if !defined(_WIN32) && __GNUC__ >= 4
@@ -106,7 +110,9 @@ that uses this DLL. This way any other project whose source files include this f
 OPJ_API functions as being imported from a DLL, whereas this DLL sees symbols
 defined with this macro as being exported.
 */
-#   if defined(OPJ_EXPORTS) || defined(DLL_EXPORT)
+#   if defined(NONDLL)
+#       define OPJ_API extern
+#   elif defined(OPJ_EXPORTS) || defined(DLL_EXPORT)
 #       define OPJ_API __declspec(dllexport)
 #   else
 #       define OPJ_API __declspec(dllimport)
